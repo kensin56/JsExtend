@@ -1,4 +1,4 @@
-<h4>Class: QueryString</h4>
+# Class: QueryString
 
 refresh()
 return void, Refresh key and values
