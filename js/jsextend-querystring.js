@@ -69,6 +69,11 @@ class QueryString {
 			this.keyVals[idx].val = val;
 		}
 	}
+	remove(key){
+		let idx = this.keyVals.map(r=>r.key).indexOf(key.toLowerCase());
+		if(idx > -1)
+			this.keyVals.splice(idx, 1);
+	}
 	// generate href
 	toString(){
 		if(this.keyVals.length > 0){
@@ -81,10 +86,11 @@ class QueryString {
 				url += sep + qs.key + '=' + qs.val;
 			}
 
-			this.href = url;
+			return url;
 		}
-
-		return this.href;
+		else{
+			return this.href;
+		}
 	}
 	// toJson
 	toJsonString(){
