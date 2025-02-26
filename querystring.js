@@ -1,9 +1,9 @@
 class QueryString {
-	constructor(){
-		this.refresh();
+	constructor(href){
+		this.refresh(href);
 	}
-	refresh(){
-		this.href = window.location.href.toString();
+	refresh(href){
+		this.href = href ?? window.location.href.toString();
 		this.getKeyVals();
 	}
 	// get key value array
@@ -70,7 +70,7 @@ class QueryString {
 		}
 	}
 	// generate href
-	getHref(){
+	toString(){
 		if(this.keyVals.length > 0){
 			let url = this.href.split('?')[0]
 
