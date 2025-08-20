@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-12">
+		<h4>QueryString</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-1">
+		<label for="txtUrl" class="col-form-label">Url</label>
+	</div>
+	<div class="col-11">
+		<input type="text" class="form-control" id="txtUrl" value="https://www.google.com" disabled />
+	</div>
+</div>
+<div class="row">
+	<div class="col-1">
+		<label for="txtKey" class="col-form-label">Key</label>
+	</div>
+	<div class="col-4">
+		<input type="text" class="form-control" id="txtKey" />
+	</div>
+	<div class="col-1">
+		<label for="txtValue" class="col-form-label">Value</label>
+	</div>
+	<div class="col-4">
+		<input type="text" class="form-control" id="txtValue" />
+	</div>
+	<div class="col-2">
+		<button type="button" class="btn btn-primary" onclick="set()">Set</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-1">
+		<label for="selKey" class="col-form-label">Keys</label>
+	</div>
+	<div class="col-4">
+		<select id="selKey" class="form-control">
+		</select>
+	</div>
+	<div class="col-2">
+		<button type="button" class="btn btn-primary" onclick="remove()">Remove</button>
+	</div>
+</div>

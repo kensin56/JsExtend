@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-12">
+		<h4>DataTable</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-1">
+		<label for="txtDataJson" class="col-form-label">Data</label>
+	</div>
+	<div class="col-9">
+		<textarea id="txtDataJson" class="form-control" rows="5">[{"name": "ken", "id": 1},{"name": "stella", "id": 2},{"name": "john", "id": 3}]</textarea>
+	</div>
+	<div class="col-2">
+		<button type="button" class="btn btn-primary" onclick="showDataTable()">genTableHtml</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-1">Search</div>
+	<div class="col-9">
+		<input type="search" id="txtSearch" value="ken" onkeyup="searchDataTable(this.value, event)">
+	</div>
+	<div class="col-2">
+		<button type="button" class="btn btn-primary" onclick="searchDataTable()">search</button>
+	</div>
+</div>
+<div class="row">
+	<table id="tbl"></table>
+</div>

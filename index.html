@@ -3,134 +3,110 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/jsextend.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 	<script type="text/javascript" src="js/jsextend-querystring.js?update=202502261618"></script>
+	<script type="text/javascript" src="js/jsextend-dataTable.js?update=202508200854"></script>
 	<script type="text/javascript" src="js/jsextend-json.js?update=202502261619"></script>
 </head>
 <body>
 	<div class="container">
-		<!-- Query String -->
-		<div class="row">
-			<div class="col-12">
-				<h4>QueryString</h4>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<a class="nav-link" href="javascript:changePage('dataTable.html')">DataTable</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="javascript:changePage('json.html')">Json</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="javascript:changePage('queryString.html')">Query String</a>
+					</li>
+				</ul>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-1">
-				<label for="txtUrl" class="col-form-label">Url</label>
-			</div>
-			<div class="col-11">
-				<input type="text" class="form-control" id="txtUrl" value="https://www.google.com" disabled />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-1">
-				<label for="txtKey" class="col-form-label">Key</label>
-			</div>
-			<div class="col-4">
-				<input type="text" class="form-control" id="txtKey" />
-			</div>
-			<div class="col-1">
-				<label for="txtValue" class="col-form-label">Value</label>
-			</div>
-			<div class="col-4">
-				<input type="text" class="form-control" id="txtValue" />
-			</div>
-			<div class="col-2">
-				<button type="button" class="btn btn-primary" onclick="set()">Set</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-1">
-				<label for="selKey" class="col-form-label">Keys</label>
-			</div>
-			<div class="col-4">
-				<select id="selKey" class="form-control">
-				</select>
-			</div>
-			<div class="col-2">
-				<button type="button" class="btn btn-primary" onclick="remove()">Remove</button>
-			</div>
-		</div>
-		<script>
-			// Get Original URL
-			var Url = new QueryString(document.getElementById('txtUrl').value);
-			updateKeys();
-
-			function set(){
-				let key = document.getElementById('txtKey').value.trim();
-				let val = document.getElementById('txtValue').value.trim();
-
-				if(key && val){
-					Url.set(key, val);
-					updateKeys();
-					showResult();
-				}
-			}
-
-			function remove(){
-				let key = document.getElementById('selKey').value;
-				if(key){
-					Url.remove(key);
-					updateKeys();
-					showResult();
-				}
-			}
-			
-			function showResult(){
-				document.getElementById('txtUrl').value = Url.toString();
-			}
-
-			function updateKeys(){
-				let keys = Url.getKeys();
-				let select = document.getElementById('selKey');
-				let valStr = '';
-
-				for(let i in keys){
-					let key = keys[i];
-					valStr += '<option value="' + key + '">' + key + '</option>'
-				}
-
-				select.innerHTML = valStr;
-			}
-		</script>
-		<!-- //Query String -->
-
-		<!-- JSON -->
-		<div class="row">
-			<div class="col-12">
-				<h4>JSON</h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-1">
-				<label for="txtStyle" class="col-form-label">Style</label>
-			</div>
-			<div class="col-9">
-				<textarea type="text" class="form-control" id="txtStyle">padding: 10px; color: red;</textarea>
-			</div>
-			<div class="col-2">
-				<button type="button" class="btn btn-primary" onclick="parseStyle()">parseStyle</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-1">
-				<label for="txtJsonResult" class="col-form-label">Result</label>
-			</div>
-			<div class="col-9">
-				<textarea id="txtJsonResult" class="form-control" disabled></textarea>
-			</div>
-		</div>
-		<script>
-			function parseStyle(){
-				let obj = JSON.parseStyle(document.getElementById('txtStyle').value);
-				document.getElementById('txtJsonResult').innerHTML = JSON.stringify(obj);
-			}
-		</script>
-		<!-- //JSON -->
+		</nav>
+		<div id="content"></div>
 	</div>
+	<script>
+		function changePage(url){
+			fetch(url)
+				.then(response => response.text())
+				.then(text => {
+					document.querySelector('#content').innerHTML = text;
+				});
+		}
+	</script>
+	<!-- DataTable -->
+	<script>
+		function showDataTable(){
+			let data = document.querySelector('#txtDataJson').value.toString().trim();
+			let dataJson = JSON.parse(data);
+
+			document.querySelector('#tbl').genDataTable(dataJson, 'class 4A');
+		}
+
+		function searchDataTable(value, ev){
+			let keyword = document.querySelector('#txtSearch').value.trim();
+			document.querySelector('#tbl').filter(keyword, null, ev);
+		}
+
+		changePage('dataTable.html?update=202508200852');
+	</script>
+	<!-- //DataTable -->
+	<!-- QueryString -->
+	<script>
+		// Get Original URL
+		var Url = new QueryString(document.querySelector('#txtUrl').value);
+		updateKeys();
+
+		function set(){
+			let key = document.querySelector('#txtKey').value.trim();
+			let val = document.querySelector('#txtValue').value.trim();
+
+			if(key && val){
+				Url.set(key, val);
+				updateKeys();
+				showResult();
+			}
+		}
+
+		function remove(){
+			let key = document.querySelector('#selKey').value;
+			if(key){
+				Url.remove(key);
+				updateKeys();
+				showResult();
+			}
+		}
+		
+		function showResult(){
+			document.querySelector('#txtUrl').value = Url.toString();
+		}
+
+		function updateKeys(){
+			let keys = Url.getKeys();
+			let select = document.querySelector('#selKey');
+			let valStr = '';
+
+			for(let i in keys){
+				let key = keys[i];
+				valStr += '<option value="' + key + '">' + key + '</option>'
+			}
+
+			select.innerHTML = valStr;
+		}
+	</script>
+	<!-- //QueryString -->
+	<!-- JSON -->
+	<script>
+		function parseStyle(){
+			let obj = JSON.parseStyle(document.querySelector('#txtStyle').value);
+			document.querySelector('#txtJsonResult').innerHTML = JSON.stringify(obj);
+		}
+	</script>
+	<!-- //JSON -->
 	<style type="text/css">
 		.row {
 			padding-top: 10px;
